@@ -22,9 +22,5 @@
         </div>
     {% endfor %}
     <hr>
-    {% if user.is_aunthenticated %}
-        <p>
-            <button class="btn btn-default" onclick="location.href='{% url 'new_post' %}'">New Post</button>
-        </p>
-    {% endif %}
+    <button class="btn btn-default" onclick="location.href='{% url 'new_post' %}'">New Post</button>
 {% endblock %}

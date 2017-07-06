@@ -65,7 +65,7 @@ def new_post(request):
     return render(request, 'blogpostform.html', {'form': form})
 
 
-@login_required(login_url='/login/')
+@login_required
 def edit_post(request, id):
     post = get_object_or_404(Post, pk=id)
     if request.method == "POST":
