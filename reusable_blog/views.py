@@ -5,6 +5,7 @@ from django.utils import timezone
 from .models import Post
 from .forms import BlogPostForm
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -48,6 +49,7 @@ def top_posts(request):
     return render(request, "blogposts.html", {'posts': posts})
 
 
+@login_required(login_url='/login/')
 def new_post(request):
     if request.method == "POST":
         form = BlogPostForm(request.POST, request.FILES)
@@ -63,16 +65,17 @@ def new_post(request):
     return render(request, 'blogpostform.html', {'form': form})
 
 
+@login_required(login_url='/login/')
 def edit_post(request, id):
-   post = get_object_or_404(Post, pk=id)
-   if request.method == "POST":
-       form = BlogPostForm(request.POST, request.FILES, instance=post)
-       if form.is_valid():
-           post = form.save(commit=False)
-           post.author = request.user
-           post.published_date = timezone.now()
-           post.save()
-           return redirect(post_detail, post.pk)
-   else:
-       form = BlogPostForm(instance=post)
-   return render(request, 'blogpostform.html', {'form': form})
+    post = get_object_or_404(Post, pk=id)
+    if request.method == "POST":
+        form = BlogPostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+        return redirect(post_detail, post.pk)
+    else:
+        form = BlogPostForm(instance=post)
+    return render(request, 'blogpostform.html', {'form': form})
