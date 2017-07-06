@@ -17,7 +17,7 @@
 
                         <p>{{ post.content }}</p>
                         <p><button class="btn btn-default" onclick="location.href='/blog'">Back to Blog</button>
-                         <button class="btn btn-default" onclick="location.href='edit'">Edit</button>
+                         <button class="btn btn-default" onclick="location.href='{% url 'edit' post.id %}'">Edit</button>
                         </p>
                         <p>{{ post.published_date }} | <strong>Views</strong> {{ post.views }} | <strong>Tag</strong> {{ post.tag }}</p>
                         {% load disqus_tags %}
