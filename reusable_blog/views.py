@@ -5,7 +5,7 @@ from django.utils import timezone
 from .models import Post
 from .forms import BlogPostForm
 from django.shortcuts import redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 # Create your views here.
@@ -49,7 +49,7 @@ def top_posts(request):
     return render(request, "blogposts.html", {'posts': posts})
 
 
-@login_required(login_url='/login/')
+@staff_member_required
 def new_post(request):
     if request.method == "POST":
         form = BlogPostForm(request.POST, request.FILES)
@@ -65,7 +65,7 @@ def new_post(request):
     return render(request, 'blogpostform.html', {'form': form})
 
 
-@login_required
+@staff_member_required
 def edit_post(request, id):
     post = get_object_or_404(Post, pk=id)
     if request.method == "POST":

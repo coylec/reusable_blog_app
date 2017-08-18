@@ -18,7 +18,7 @@
                         <p>{{ post.content }}</p>
                         <p><button class="btn btn-default" onclick="location.href='/blog'">Back to Blog</button>
                         </P>
-                        {% if user.is_authenticated %}
+                        {% if user.is_staff %}
                         <p>
                          <button class="btn btn-default" onclick="location.href='{% url 'edit' post.id %}'">Edit</button>
                         </p>
